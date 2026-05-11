@@ -339,7 +339,8 @@ const pushPagesSecret = () => {
     // 使用临时文件推送secrets
     try {
       execSync(`pnpm dlx wrangler pages secret bulk ${runtimeEnvFile} --project-name ${PROJECT_NAME}`, {
-        stdio: "pipe"
+        stdio: "pipe",
+        encoding: "utf-8"
       });
     } catch (e: any) {
       console.error("wrangler stdout:", e.stdout?.toString());
