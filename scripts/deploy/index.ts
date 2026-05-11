@@ -337,16 +337,9 @@ const pushPagesSecret = () => {
     console.log(`📝 Found ${Object.keys(secrets).length} secrets to push:`, Object.keys(secrets).join(', '));
 
     // 使用临时文件推送secrets
-    try {
-      execSync(`pnpm dlx wrangler pages secret bulk ${runtimeEnvFile} --project-name ${PROJECT_NAME}`, {
-        stdio: "pipe",
-        encoding: "utf-8"
-      });
-    } catch (e: any) {
-      console.error("wrangler stdout:", e.stdout?.toString());
-      console.error("wrangler stderr:", e.stderr?.toString());
-      throw e;
-    }
+    execSync(`pnpm dlx wrangler pages secret bulk ${runtimeEnvFile} --project-name ${PROJECT_NAME}`, {
+      stdio: "inherit"
+    });
 
     // 清理临时文件
     if (existsSync(runtimeEnvFile)) {
